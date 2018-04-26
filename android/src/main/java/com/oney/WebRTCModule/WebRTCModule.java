@@ -49,7 +49,10 @@ public class WebRTCModule extends ReactContextBaseJavaModule {
         mPeerConnectionObservers = new SparseArray<PeerConnectionObserver>();
         localStreams = new HashMap<String, MediaStream>();
 
-        PeerConnectionFactory.initializeAndroidGlobals(reactContext, true, true, true);
+        PeerConnectionFactory.InitializationOptions.Builder optionBuilder = PeerConnectionFactory.InitializationOptions.builder(reactContext);
+        optionBuilder.setEnableVideoHwAcceleration(true);
+
+        PeerConnectionFactory.initialize(optionBuilder.createInitializationOptions());
 
         mFactory = new PeerConnectionFactory(null);
         // Initialize EGL contexts required for HW acceleration.
